@@ -1,36 +1,33 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const url = require('url');
+const url = require("url");
 
-module.exports = (server) => {
+module.exports = server => {
+  router.post("/auth/login", (req, res, next) => {
+    let users = server.db.getState().users,
+      matchedUser = users.find(user => {
+        return Buffer.from(`${user.email}|${user.password}`).toString("base64") === req.body.token;
+      });
 
-	router.post('/auth/login', (req, res, next) => {
-		let users = server.db.getState().users,
-			matchedUser = users.find((user) => {
-				return user.login.toUpperCase() === req.body.login.toUpperCase();
-			});
+    if (matchedUser) {
+      res.json(matchedUser);
+    } else {
+      res.status(401).send("Can't find user with those credentials");
+    }
+  });
 
-		if(!matchedUser) {
-			res.status(401).send('Wrong username');
-		} else if(matchedUser.password === req.body.password) {
-			res.json({ token: matchedUser.fakeToken});
-		} else {
-			res.status(401).send("Wrong password");
-		}
-	});
-		
-	router.post('/auth/userinfo', (req, res, next) => {
-		let users = server.db.getState().users,
-			matchedUser = users.find((user) => {
-				return user.fakeToken === req.body.token;//('Authorization');
-			});
-			
-		if(!matchedUser) {
-			res.status(401).send('Unauthorized');
-		} else {
-			res.json(matchedUser);
-		}
-	});
+  router.post("/auth/userinfo", (req, res, next) => {
+    let users = server.db.getState().users,
+      matchedUser = users.find(user => {
+        return user.fakeToken === req.body.token; //('Authorization');
+      });
 
-	return router;
+    if (!matchedUser) {
+      res.status(401).send("Unauthorized");
+    } else {
+      res.json(matchedUser);
+    }
+  });
+
+  return router;
 };

@@ -2,23 +2,36 @@
 	"users": [
   {
     "id": 1,
-    "fakeToken": "58ebfdf7f1f558c5c86e17f6",
+    "token": "58ebfdf7f1f558c5c86e17f6",
     "name": {
       "first": "FirstName",
       "last": "LastName"
     },
-    "login": "flastname",
-    "password": "flastname"
+    "email": "flastname@smail.net",
+    "password": "flastname",
+    "role": "user"
   },
   {
     "id": 2,
-    "fakeToken": "58ebfdf7ec92657b493b24da",
+    "token": "58ebfdf7ec92657b493b241a",
     "name": {
       "first": "Brock",
       "last": "Beasley"
     },
-    "login": "Morales",
-    "password": "id"
+    "email": "Morales@smail.net",
+    "password": "id",
+    "role": "moderator"
+  },
+  {
+    "id": 3,
+    "token": "58ebfdf7ec92657b493b24da",
+    "name": {
+      "first": "Admin",
+      "last": "Admin"
+    },
+    "email": "admin@smail.net",
+    "password": "admin",
+    "role": "admin"
   }
 ]
 }
